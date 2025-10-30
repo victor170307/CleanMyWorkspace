@@ -1,28 +1,38 @@
 package main
 
 import (
-	"CleanMyWorkSpace/clean"
+	"CleanMyWorkspace/Clean"
 	"fmt"
 
-	c "github.com/Mentor-Paris/CleanMyWorkspace"
+	"github.com/Mentor-Paris/CleanMyWorkspace"
 )
 
 func main() {
-	souk := c.GenererateWorkSpace()
 
-	clean.CleanWorkSpace(souk)
+	workspace := CleanMyWorkspace.GenererateWorkSpace()
 
-	afficherEspaceTravail(souk)
+	fmt.Println("c'est pas propre du tout ici")
+	printWorkspace(workspace)
 
+	fmt.Println("\nc'est maintenant propre !!!")
+	cleanedWorkspace := Clean.CleanWorkSpace(workspace)
+	printWorkspace(cleanedWorkspace)
 }
 
-func afficherEspaceTravail(espaceTravail *[][]*string) {
-	for _, ligne := range *espaceTravail {
-		for _, objet := range ligne {
-			if objet == nil {
-				fmt.Print("|nil")
+func printWorkspace(workspace *[][]*string) {
+	if workspace == nil {
+		return
+	}
+
+	for _, row := range *workspace {
+		for i, cell := range row {
+			if i > 0 {
+				fmt.Print("|")
+			}
+			if cell == nil || *cell == "" {
+				fmt.Print("nil")
 			} else {
-				fmt.Print("|" + *objet)
+				fmt.Print(*cell)
 			}
 		}
 		fmt.Println("|")
